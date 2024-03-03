@@ -1,25 +1,8 @@
 import React from "react";
 
-function List({ todoData, setTodoData }) {
-  const btnStyle = () => {
-    return {
-      color: "#fff",
-      border: "none",
-      padding: "5px 9px",
-      borderRadius: "50%",
-      cursor: "pointer",
-      float: "right",
-    };
-  };
-
-  function listStyle(completed) {
-    return {
-      padding: "10px",
-      borderBottom: "1px dotted #ccc",
-      textDecoration: completed ? "line-through" : "none",
-    };
-  }
-
+const List = ({ data, provided, snapshot, todoData, setTodoData }) => {
+  console.log(`List component`);
+  const { id, title, completed } = data;
   function handleCompleteOnChange(id) {
     let newTodoData = todoData.map((data) => {
       data.id === id && (data.completed = !data.completed);
@@ -34,24 +17,31 @@ function List({ todoData, setTodoData }) {
   }
 
   return (
-    <div>
-      {todoData.map((data) => (
-        <div style={listStyle(data.completed)} key={data.id}>
-          <p>
-            <input
-              type="checkbox"
-              defaultChecked={false}
-              onChange={() => handleCompleteOnChange(data.id)}
-            />
-            {data.title}
-            <button style={btnStyle()} onClick={() => handleClick(data.id)}>
-              X
-            </button>
-          </p>
-        </div>
-      ))}
+    <div
+      key={id}
+      ref={provided.innerRef}
+      {...provided.draggableProps}
+      {...provided.dragHandleProps}
+      className={`${
+        snapshot.isDragging ? "bg-gray-300" : "bg-gray-100"
+      } flex items-center justify-between w-full px-4 py-1 my-2 text-gray-600 border rounded`}
+    >
+      <div className="flex items-center">
+        <input
+          className="mr-1"
+          type="checkbox"
+          defaultChecked={false}
+          onChange={() => handleCompleteOnChange(id)}
+        />
+        <span className={completed ? "line-through" : undefined}>{title}</span>
+      </div>
+      <div>
+        <button className="px-4 py-2" onClick={() => handleClick(id)}>
+          X
+        </button>
+      </div>
     </div>
   );
-}
+};
 
 export default List;
