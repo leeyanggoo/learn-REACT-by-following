@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./App.css";
-import List from "./components/Lists";
 import Form from "./components/Form";
+import Lists from "./components/Lists";
 
 export default function App() {
   console.log(`APP component`);
-  const [todoData, setTodoData] = useState([
-    {
-      id: "1",
-      title: "공부하기",
-      completed: true,
-    },
-    { id: "2", title: "청소하기", completed: false },
-  ]);
+
+  const initialTodoData = localStorage.getItem("todoData")
+    ? JSON.parse(localStorage.getItem("todoData"))
+    : [];
+
+  const [todoData, setTodoData] = useState(initialTodoData);
   const [value, setValue] = useState("");
 
   function handleSubmit(e) {
@@ -26,7 +24,29 @@ export default function App() {
 
     setTodoData((prev) => [...prev, newTodo]);
     setValue("");
+    // localStorage.setItem("todoData", JSON.stringify([...todoData, newTodo]));
   }
+
+  const handleClick = useCallback(
+    (id) => {
+      let newTodoData = todoData.filter((data) => data.id !== id);
+      setTodoData(newTodoData);
+      // localStorage.setItem("todoData", JSON.stringify(newTodoData));
+    },
+    [todoData]
+  );
+
+  const handleRemoveClick = () => {
+    setTodoData([]);
+    // localStorage.setItem("todoData", JSON.stringify([]));
+  };
+
+  // useEffect에 의존성배열로 todoData를 할당해서
+  // 데이터가 변경될 때마다 로컬스토리지에 저장 !!
+  // setTodoData가 호출되는 곳마다 하지 않고 싶어서 해봤다.
+  useEffect(() => {
+    localStorage.setItem("todoData", JSON.stringify(todoData));
+  }, [todoData]);
 
   return (
     <div
@@ -37,9 +57,14 @@ export default function App() {
       <div className="w-full p-6 m-4 bg-white rounded shadow lg:w-3/4 lg:max-w-lg">
         <div className="flex justify-between mb-3">
           <h1>할 일 목록</h1>
+          <button onClick={handleRemoveClick}>Delete All</button>
         </div>
 
-        <List todoData={todoData} setTodoData={setTodoData} />
+        <Lists
+          todoData={todoData}
+          setTodoData={setTodoData}
+          handleClick={handleClick}
+        />
 
         <Form value={value} setValue={setValue} handleSubmit={handleSubmit} />
       </div>

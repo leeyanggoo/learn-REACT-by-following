@@ -2,6 +2,7 @@ import React from "react";
 
 const Form = ({ value, setValue, handleSubmit }) => {
   console.log(`Form component`);
+
   function handleOnChange(e) {
     setValue(e.target.value);
   }
