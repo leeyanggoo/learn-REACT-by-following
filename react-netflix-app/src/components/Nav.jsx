@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 
 //
 import "./Nav.css";
+import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
   const [show, handleShow] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -17,6 +20,11 @@ const Nav = () => {
     };
   }, []);
 
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+    navigate(`/search?q=${e.target.value}`);
+  };
+
   return (
     <nav
       className={`${
@@ -26,9 +34,21 @@ const Nav = () => {
       <img
         src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg"
         alt="Netflix logo"
-        onClick={() => window.location.reload()}
+        onClick={() => {
+          navigate("/");
+          setSearchValue("");
+        }}
         className="block object-contain cursor-pointer max-h-10"
       />
+
+      <input
+        value={searchValue}
+        onChange={handleSearchChange}
+        className="nav__input"
+        type="text"
+        placeholder="영화를 검색해주세요."
+      />
+
       <img
         src="https://www.zenplates.co/assets/images/documentation/avatars/default.png"
         alt=""
