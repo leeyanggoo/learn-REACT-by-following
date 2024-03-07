@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/learn-REACT-by-following/react-netflix-app/static/css/main.92eee6fd.css",
+    "main.js": "/learn-REACT-by-following/react-netflix-app/static/js/main.5dd3cece.js",
+    "static/js/453.5af2b189.chunk.js": "/learn-REACT-by-following/react-netflix-app/static/js/453.5af2b189.chunk.js",
+    "index.html": "/learn-REACT-by-following/react-netflix-app/index.html",
+    "main.92eee6fd.css.map": "/learn-REACT-by-following/react-netflix-app/static/css/main.92eee6fd.css.map",
+    "main.5dd3cece.js.map": "/learn-REACT-by-following/react-netflix-app/static/js/main.5dd3cece.js.map",
+    "453.5af2b189.chunk.js.map": "/learn-REACT-by-following/react-netflix-app/static/js/453.5af2b189.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.92eee6fd.css",
+    "static/js/main.5dd3cece.js"
+  ]
+}
