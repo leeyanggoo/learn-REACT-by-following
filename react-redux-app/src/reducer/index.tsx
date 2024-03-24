@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 import counter from './counter';
 import todos from './todos';
+import posts from './posts';
 
-const rootRucer = combineReducers({
+const rootReducer = combineReducers({
   counter,
   todos,
+  posts,
 });
 
-export default rootRucer;
+export default rootReducer;
 
-export type RootState = ReturnType<typeof rootRucer>;
+export type RootState = ReturnType<typeof rootReducer>;

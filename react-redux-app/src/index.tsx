@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createStore } from 'redux';
-import rootRucer from './reducer';
+import { applyMiddleware, createStore } from 'redux';
+import rootReducer from './reducer';
 import { Provider } from 'react-redux';
-
-const store = createStore(rootRucer);
+import { thunk } from 'redux-thunk';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const loggerMiddleware = (store: any) => (next: any) => (action: any) => {
+  console.log(`store`, store);
+  console.log(`action`, action);
+  next(action);
+};
+
+const middleWare = applyMiddleware(loggerMiddleware, thunk);
+
+const store = createStore(rootReducer, {}, middleWare);
+
 const render = () =>
   root.render(
     <React.StrictMode>
